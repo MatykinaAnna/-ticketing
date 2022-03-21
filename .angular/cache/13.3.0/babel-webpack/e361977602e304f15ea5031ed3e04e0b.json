@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { Comment } from \"./comment\";\nexport class DataForModelWindow {\n  constructor(comments, id, url) {\n    this.comments = [];\n    comments.forEach(item => {\n      this.comments.push(new Comment(item.id, item.text, item.date));\n    });\n    this.id = id;\n    this.url = url;\n  }\n\n}","map":null,"metadata":{},"sourceType":"module"}

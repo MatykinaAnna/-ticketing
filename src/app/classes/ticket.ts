@@ -1,11 +1,11 @@
 export class Ticket {
     // Цена в рублях
-    price: number
+    private _price: number
     // Код авиакомпании (iata)
-    carrier: string
+    private _carrier: string
     // Массив перелётов.
     // В тестовом задании это всегда поиск "туда-обратно" значит состоит из двух элементов
-    segments: [
+    public segments: [
         {
             // Код города (iata)
             origin: string
@@ -31,4 +31,20 @@ export class Ticket {
             duration: number
         }
     ]
+
+    public get price(){
+        return (this._price)
+    }
+    public get duration(){
+        return (this.segments[0].duration + this.segments[1].duration)
+    }
+    public get numberOfStops(){
+        return (this.segments[0].stops.length + this.segments[1].stops.length)
+    }
+    public get flightTimeThere(): Date {
+        console.log('flightTimeThere')
+        let d = new Date(this.segments[0].date)
+        console.log (d)
+        return d
+    }
 }

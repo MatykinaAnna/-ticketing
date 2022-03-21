@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="header">
+        <div class="price">{{ticket.price}} P</div>
+        <div class="logo">
+            <img src="../assets/img/S7 Logo.svg" alt="">
+        </div>
+    </div>
+    <div class="row1">
+        <div class="column">
+            <div class="origin">
+                {{ticket.segments[0].origin}} - {{ticket.segments[1].origin}}
+            </div>
+            <div class="time">
+                time
+                {{ticket.segments[0].date}}
+            </div>
+        </div>
+    </div>
+</div>

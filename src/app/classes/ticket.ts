@@ -38,16 +38,28 @@ export class Ticket {
         this.segments = segments
     }
 
-    getTimeString(numSegments: number): string{
+    private timeString(d: Date){
         let time: string = ''
-        if (new Date(this.segments[numSegments].date).getHours() < 10 ){
+        if (d.getHours() < 10 ){
             time+='0'
         }
-        time+=new Date(this.segments[numSegments].date).getHours()+':'
-        if (new Date(this.segments[numSegments].date).getMinutes() < 10 ){
+        time+= d.getHours()+':'
+        if (d.getMinutes() < 10 ){
             time+='0'
         }
-        time+=new Date(this.segments[numSegments].date).getMinutes()
+        time+= d.getMinutes()
+
+        return time
+    }
+
+    getTimeString(numSegments: number): string{
+        let time = this.timeString(new Date(this.segments[numSegments].date))
+
+        let d = new Date(this.segments[numSegments].date)
+        d.setMinutes(d.getMinutes() + this.segments[numSegments].duration)
+        
+        time = time + ' - ' + this.timeString(d)
+
         return time
     }
 
@@ -57,9 +69,26 @@ export class Ticket {
     getStops(numSegments: number): number{
         return (this.segments[numSegments].stops.length)
     }
+    private div(val:number, by:number):number{
+        return (val - val % by) / by;
+    }
 
     public get price(){
         return (this._price)
+    }
+    public getPriceString(){
+        let rezult: string[] = []
+        let p = this._price
+        while (p>0){
+            rezult.push((p % 1000).toString())
+            p = this.div(p, 1000)
+        }
+        let rezult1 = ''
+        for (let i=rezult.length-1; i>=0 ; i--){
+            rezult1 +=rezult[i]
+            rezult1 +=' '
+        }
+        return (rezult1)
     }
     public get carrier(){
         return (this._carrier)

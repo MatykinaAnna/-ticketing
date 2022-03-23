@@ -36,4 +36,75 @@
     </div>
 </div> -->
 
-{{ticket}}
+<div class="container">
+    <div class="row1">
+        <div class="price">
+            {{price}} P
+        </div>
+        <div>
+            <img src="../assets/img/S7 Logo.svg" alt="">
+        </div>
+    </div>
+    <div class="row2">
+        <div class="column1">
+            <div class="column_r1">
+                <div class="header">
+                    {{ticket.segments[0].origin}} - {{ticket.segments[0].destination}}
+                </div>
+                <div class="inf">
+                    {{timeString[0]}}
+                </div>
+            </div>  
+            <div>
+                <div class="header">
+                    {{ticket.segments[1].origin}} - {{ticket.segments[1].destination}}
+                </div>
+                <div class="inf">
+                    {{timeString[1]}}
+                </div>
+            </div>                
+        </div>
+
+        <div class="column2">
+            <div class="column_r1">
+                <div class="header">
+                    В ПУТИ
+                </div>
+                <div class="inf">
+                    {{travelTime[0]}}
+                </div>
+            </div>  
+            <div>
+                <div class="header">
+                    В ПУТИ
+                </div>
+                <div class="inf">
+                    {{travelTime[1]}}
+                </div>
+            </div>                
+        </div> 
+        
+        <div class="column3">
+            <div class="column_r1">
+                <div class="header">
+                    {{stops[0]}}
+                </div>
+                <div class="inf">
+                    <span *ngFor="let item of cities[0]">
+                        {{item}}
+                    </span>
+                </div>
+            </div>  
+            <div>
+                <div class="header">
+                    {{stops[1]}}
+                </div>
+                <div class="inf">
+                    <span *ngFor="let item of cities[1]">
+                        {{item}}
+                    </span>
+                </div>
+            </div>                
+        </div>         
+    </div>
+</div>

@@ -3,6 +3,7 @@ import { HttpService} from './http.service';
 import { HttpServiceParam} from './http.serviceParam';
 import { HttpClient} from '@angular/common/http';
 import { Ticket } from './classes/ticket'
+import { Filtr_numTransfer } from './classes/filtr_numTransfer'
      
 @Component({
     selector: 'my-app',
@@ -14,7 +15,8 @@ import { Ticket } from './classes/ticket'
 export class AppComponent implements OnInit { 
     private httpServiceGetSearchId: HttpService;
     private httpServiceGetTickets: HttpServiceParam;
-    public tickets: Ticket[] = []
+    public tickets: Ticket[] = [];
+    public filtr_numTransfer: Filtr_numTransfer;
 
     constructor( private http: HttpClient ){
         this.httpServiceGetSearchId = new HttpService(http, 'https://front-test.beta.aviasales.ru/search')
@@ -22,6 +24,8 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit(): void{ 
+        this.filtr_numTransfer = new Filtr_numTransfer(false, false, false, false, false)
+        
         this.httpServiceGetSearchId.getData().subscribe((data:any) => {
             let searchId: string = data.searchId
             this.getPackOfTickets(searchId)

@@ -33,9 +33,9 @@ export class AppComponent implements OnInit {
             data.tickets.forEach(element => {
                 this.tickets.push(element)
             });
-            if (!data.stop){
-                this.getPackOfTickets(searchId)
-            }
+            // if (!data.stop){
+            //     this.getPackOfTickets(searchId)
+            // }
         });
     }
 

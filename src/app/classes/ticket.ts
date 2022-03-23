@@ -32,13 +32,37 @@ export class Ticket {
         }
     ]
 
+    constructor(price: number, carrier: string, segments: any){
+        this._price = price
+        this._carrier = carrier
+        this.segments = segments
+    }
+
+    getTimeString(numSegments: number): string{
+        let time: string = ''
+        if (new Date(this.segments[numSegments].date).getHours() < 10 ){
+            time+='0'
+        }
+        time+=new Date(this.segments[numSegments].date).getHours()+':'
+        if (new Date(this.segments[numSegments].date).getMinutes() < 10 ){
+            time+='0'
+        }
+        time+=new Date(this.segments[numSegments].date).getMinutes()
+        return time
+    }
+
     travelTime(numSegments: number ): string{
-        console.log('getTravelTime')
-        return `${(this.segments[numSegments].duration / 60)}ч ${this.segments[numSegments].duration % 60}мин`
+        return `${(Math.round(this.segments[numSegments].duration / 60))}ч ${this.segments[numSegments].duration % 60}мин`
+    }
+    getStops(numSegments: number): number{
+        return (this.segments[numSegments].stops.length)
     }
 
     public get price(){
         return (this._price)
+    }
+    public get carrier(){
+        return (this._carrier)
     }
     public get duration(){
         return (this.segments[0].duration + this.segments[1].duration)

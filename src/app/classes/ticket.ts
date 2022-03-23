@@ -32,6 +32,11 @@ export class Ticket {
         }
     ]
 
+    travelTime(numSegments: number ): string{
+        console.log('getTravelTime')
+        return `${(this.segments[numSegments].duration / 60)}ч ${this.segments[numSegments].duration % 60}мин`
+    }
+
     public get price(){
         return (this._price)
     }
@@ -42,9 +47,15 @@ export class Ticket {
         return (this.segments[0].stops.length + this.segments[1].stops.length)
     }
     public get flightTimeThere(): Date {
-        console.log('flightTimeThere')
         let d = new Date(this.segments[0].date)
         console.log (d)
         return d
     }
+    // public get travelTime0(){
+    //     console.log('travelTime0')
+    //     return `${(this.segments[0].duration / 60)}ч ${this.segments[0].duration % 60}мин`
+    // }
+    // public get travelTime1(){
+    //     return `${(this.segments[1].duration / 60)}ч ${this.segments[1].duration % 60}мин`
+    // }
 }

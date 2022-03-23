@@ -21,11 +21,9 @@ export class AppComponent implements OnInit {
         this.httpServiceGetTickets = new HttpServiceParam(http)
     }
 
-    ngOnInit(): void{
-        console.log('ngOnInit')  
+    ngOnInit(): void{ 
         this.httpServiceGetSearchId.getData().subscribe((data:any) => {
             let searchId: string = data.searchId
-            console.log('searchId', searchId)
             this.getPackOfTickets(searchId)
         });
     }
@@ -39,23 +37,19 @@ export class AppComponent implements OnInit {
                 this.getPackOfTickets(searchId)
             }
         });
-        console.log('tickets', this.tickets[101], this.tickets[101].price)
     }
 
     sortForPrice(): void{
-        console.log('sortForPrice ')
         this.tickets.sort(function(a: Ticket, b: Ticket) {
             return a.price - b.price;
         });
-        console.log(this.tickets)
+        this.tickets
     }
 
     sortForDuration(): void{
-        console.log('sortForPrice ')
         this.tickets.sort(function(a: Ticket, b: Ticket) {
             return a.duration - b.duration;
         });
-        console.log(this.tickets)
     }
 
     filterByNumberOfStops(num: number): Array<Ticket>{

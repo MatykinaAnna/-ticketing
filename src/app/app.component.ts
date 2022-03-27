@@ -23,6 +23,7 @@ export class AppComponent implements OnInit {
     public tickets: Ticket[] = [];
     public ticketsWithoutFilter: Ticket[] = [];
     public filtr_numTransfer: Filtr_numTransfer;
+    public numTicketsOnScreen: number = 5;
 
     constructor( private http: HttpClient, private renderer: Renderer2 ){
         this.httpServiceGetSearchId = new HttpService(http, 'https://front-test.beta.aviasales.ru/search')
@@ -166,5 +167,9 @@ export class AppComponent implements OnInit {
             }
         })
         return rezult
+    }
+
+    addNumTicketsOnScreen():void{
+        this.numTicketsOnScreen+=5
     }
 }

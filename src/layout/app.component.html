@@ -35,9 +35,10 @@
                 <button class='btn b2' #b2 (click)="sortForDuration()">САМЫЙ БЫСТРЫЙ</button>
                 <button class='btn b3 active' #b3 (click)="optimal()" >ОПТИМАЛЬНЫЙ</button>
             
-                <my-ticket *ngFor="let ticket of tickets | slice:0:5"
+                <my-ticket *ngFor="let ticket of tickets | slice:0:numTicketsOnScreen"
                     [ticket]="ticket">
                 </my-ticket>
+                <button class='btn show' (click)="addNumTicketsOnScreen()">ПОКАЗАТЬ ЕЩЕ 5 БИЛЕТОВ!</button>
             </div>
         </div>
     </div>

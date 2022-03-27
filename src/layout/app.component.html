@@ -10,37 +10,34 @@
                     КОЛИЧЕСТВО ПЕРЕСАДОК
                 </div>
                 <div class="check">
-                    <input type="checkbox" id="all" [(ngModel)]="filtr_numTransfer.all">
+                    <input type="checkbox" id="all" [(ngModel)]="filtr_numTransfer.all" (change)="setFilterAll()">
                     <label for="all">Все</label>
                 </div>
                 <div class="check">
-                    <input type="checkbox" id="without" [(ngModel)]="filtr_numTransfer.without">
+                    <input type="checkbox" id="without" [(ngModel)]="filtr_numTransfer.without" (change)="setFilterWithout()">
                     <label for="without">Без пересадок</label>
                 </div>
                 <div class="check">
-                    <input type="checkbox" id="one" [(ngModel)]="filtr_numTransfer.one">
+                    <input type="checkbox" id="one" [(ngModel)]="filtr_numTransfer.one" (change)="setFilterOne()">
                     <label for="one">1 пересадка</label>
                 </div>
                 <div class="check">
-                    <input type="checkbox" id="two" [(ngModel)]="filtr_numTransfer.two">
+                    <input type="checkbox" id="two" [(ngModel)]="filtr_numTransfer.two" (change)="setFilterTwo()">
                     <label for="two">2 пересадки</label>
                 </div>
                 <div class="check">
-                    <input type="checkbox" id="three" [(ngModel)]="filtr_numTransfer.three">
+                    <input type="checkbox" id="three" [(ngModel)]="filtr_numTransfer.three" (change)="setFilterThree()">
                     <label for="three">3 пересадки</label>
                 </div>
-                {{filtr_numTransfer.all}}
-                {{filtr_numTransfer.one}}
-                {{filtr_numTransfer.two}}
-                {{filtr_numTransfer.three}}
-                {{filtr_numTransfer.without}}
             </div>
             <div>
                 <button class='btn b1' #b1 (click)="sortForPrice()">САМЫЙ ДЕШЕВЫЙ</button>
                 <button class='btn b2' #b2 (click)="sortForDuration()">САМЫЙ БЫСТРЫЙ</button>
                 <button class='btn b3 active' #b3 (click)="optimal()" >ОПТИМАЛЬНЫЙ</button>
             
-                <my-ticket [ticket]="tickets[0]"></my-ticket>
+                <my-ticket *ngFor="let ticket of tickets | slice:0:5"
+                    [ticket]="ticket">
+                </my-ticket>
             </div>
         </div>
     </div>

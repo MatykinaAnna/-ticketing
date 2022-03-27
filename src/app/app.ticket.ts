@@ -32,7 +32,6 @@ export class AppTicket implements OnChanges, OnInit {
     }
 
     ngOnChanges(obj: SimpleChanges): void{
-        console.log('OnChanges', obj)
         this.my_ticket = new Ticket(this.ticket.price, this.ticket.carrier, this.ticket.segments)
 
         this.price = this.my_ticket.getPriceString()    
@@ -48,17 +47,9 @@ export class AppTicket implements OnChanges, OnInit {
 
         this.cities.push( this.my_ticket.segments[0].stops)
         this.cities.push( this.my_ticket.segments[1].stops)
-
-        console.log(this.timeString)
-        console.log(this.travelTime)
-        console.log(this.stops)
-        console.log(this.cities)
-        console.log(this.my_ticket.price, this.price)
     }
 
     ngOnInit(): void{
-        console.log('ngOnInit')
-        console.log(this.ticket)
     }
 
 }

@@ -6,6 +6,7 @@
     width: 465px;
     border-radius: 5px;
     padding: 20px ;
+    margin-bottom: 20px;
 }
 .row1{
     display: flex;

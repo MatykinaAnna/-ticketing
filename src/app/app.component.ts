@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
     private httpServiceGetSearchId: HttpService;
     private httpServiceGetTickets: HttpServiceParam;
     public tickets: Ticket[] = [];
+    public ticketsWithoutFilter: Ticket[] = [];
     public filtr_numTransfer: Filtr_numTransfer;
 
     constructor( private http: HttpClient, private renderer: Renderer2 ){
@@ -29,7 +30,7 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit(): void{ 
-        this.filtr_numTransfer = new Filtr_numTransfer(false, false, false, false, false)
+        this.filtr_numTransfer = new Filtr_numTransfer(true, false, false, false, false)
         
         this.httpServiceGetSearchId.getData().subscribe((data:any) => {
             let searchId: string = data.searchId
@@ -37,9 +38,14 @@ export class AppComponent implements OnInit {
         });
     }
 
+    ngDoCheck(){
+    }
+
     ngAfterViewInit(){
-        console.log('ngAfterViewInit')
-        console.log(this.b1, this.b2) 
+    }
+
+    applyFilter():void{
+
     }
 
     getPackOfTickets(searchId: string): void{
@@ -47,62 +53,118 @@ export class AppComponent implements OnInit {
             data.tickets.forEach(element => {
                 this.tickets.push(element)
             });
-            // if (!data.stop){
-            //     this.getPackOfTickets(searchId)
-            // }
+            this.ticketsWithoutFilter = this.tickets
         });
     }
 
     sortForPrice(): void{
-        console.log('this.b1', this.b1)
+        this.renderer.addClass(this.b1.nativeElement, 'active')
+        this.renderer.removeClass(this.b2.nativeElement, 'active')
+        this.renderer.removeClass(this.b3.nativeElement, 'active')
+
         this.tickets.sort(function(a: Ticket, b: Ticket) {
             return a.price - b.price;
         });
-        this.tickets
+        //console.log(this.tickets)
     }
 
     sortForDuration(): void{
+        this.renderer.addClass(this.b2.nativeElement, 'active')
+        this.renderer.removeClass(this.b1.nativeElement, 'active')
+        this.renderer.removeClass(this.b3.nativeElement, 'active')
+
         this.tickets.sort(function(a: Ticket, b: Ticket) {
-            return a.duration - b.duration;
+            return ( (a.segments[0].duration + a.segments[1].duration) - (b.segments[0].duration + b.segments[1].duration) );
         });
     }
     
     optimal():void{
+        this.renderer.addClass(this.b3.nativeElement, 'active')
+        this.renderer.removeClass(this.b2.nativeElement, 'active')
+        this.renderer.removeClass(this.b1.nativeElement, 'active')
+
         console.log('оптимальный')
     }
 
+    filterBy():Ticket[]{
+        let rezult: Ticket[] = []
+        if (this.filtr_numTransfer.all){
+            this.filterByNumberOfStops(0).forEach((item)=>{
+                rezult.push(item)
+            })
+            return rezult
+        }
+        if (this.filtr_numTransfer.one){
+            this.filterByNumberOfStops(1).forEach((item)=>{
+                rezult.push(item)
+            })
+        }
+        if (this.filtr_numTransfer.two){
+            this.filterByNumberOfStops(2).forEach((item)=>{
+                rezult.push(item)
+            })
+        }
+        if (this.filtr_numTransfer.three){
+            this.filterByNumberOfStops(3).forEach((item)=>{
+                rezult.push(item)
+            })
+        }
+        if (this.filtr_numTransfer.without){
+            this.filterByNumberOfStops(0).forEach((item)=>{
+                rezult.push(item)
+            })
+        }
+        return rezult
+    }
+
+    setFilterAll():void{
+        if (this.filtr_numTransfer.all){
+            this.filtr_numTransfer.one =false
+            this.filtr_numTransfer.two =false
+            this.filtr_numTransfer.three =false
+            this.filtr_numTransfer.without =false
+        }
+        this.tickets = this.filterBy()
+    }
+
+    setFilterOne():void{
+        if (this.filtr_numTransfer.one){
+            this.filtr_numTransfer.all = false
+        }
+        this.tickets = this.filterBy()
+    }
+
+    setFilterTwo():void{
+        if (this.filtr_numTransfer.two){
+            this.filtr_numTransfer.all = false
+        }
+        this.tickets = this.filterBy()
+    }
+
+    setFilterThree():void{
+        if (this.filtr_numTransfer.three){
+            this.filtr_numTransfer.all = false
+        }
+        this.tickets = this.filterBy()
+    }
+
+    setFilterWithout():void{
+        if (this.filtr_numTransfer.without){
+            this.filtr_numTransfer.all = false
+        }
+        this.tickets = this.filterBy()
+    }
 
     filterByNumberOfStops(num: number): Array<Ticket>{
+        if (num==-1){
+            return this.ticketsWithoutFilter
+        }
         let rezult: Ticket[] = []
-        this.tickets.forEach((element: Ticket)=>{
-            if (element.numberOfStops == num){
+        this.ticketsWithoutFilter.forEach((element: Ticket)=>{
+            if (element.segments[0].stops.length+element.segments[1].stops.length == num){
                 rezult.push(element)
             }
         })
         return rezult
     }
 }
-
-
-// import { Component, ViewChild, ElementRef } from '@angular/core';
-       
-// @Component({
-//     selector: 'my-app',
-//     template: `<p #nameText>{{name}}</p>
-//                <p>{{nameText.textContent}}</p>
-//                <button (click)="change()">Изменить</button>`
-// })
-// export class AppComponent { 
-  
-//     @ViewChild("nameText", {static: false})
-//     nameParagraph: ElementRef|undefined;
-      
-//     name: string = "Tom";
-      
-//     change() {
-//         if(this.nameParagraph!==undefined){
-//             console.log(this.nameParagraph.nativeElement.textContent); 
-//             this.nameParagraph.nativeElement.textContent = "hell";
-//         }
-//     }
-// }

@@ -85,7 +85,17 @@ export class Ticket {
         }
         let rezult1 = ''
         for (let i=rezult.length-1; i>=0 ; i--){
-            rezult1 +=rezult[i]
+            if (i!=rezult.length-1){
+                if (Number(rezult[i])< 100 && Number(rezult[i])> 10){
+                    rezult1 += '0'
+                }
+                if (Number(rezult[i])< 10){
+                    rezult1 += '00'
+                }
+                rezult1 +=rezult[i]
+            } else{
+                rezult1 +=rezult[i]
+            }  
             rezult1 +=' '
         }
         return (rezult1)
@@ -96,19 +106,9 @@ export class Ticket {
     public get duration(){
         return (this.segments[0].duration + this.segments[1].duration)
     }
-    public get numberOfStops(){
-        return (this.segments[0].stops.length + this.segments[1].stops.length)
-    }
     public get flightTimeThere(): Date {
         let d = new Date(this.segments[0].date)
         console.log (d)
         return d
     }
-    // public get travelTime0(){
-    //     console.log('travelTime0')
-    //     return `${(this.segments[0].duration / 60)}ч ${this.segments[0].duration % 60}мин`
-    // }
-    // public get travelTime1(){
-    //     return `${(this.segments[1].duration / 60)}ч ${this.segments[1].duration % 60}мин`
-    // }
 }

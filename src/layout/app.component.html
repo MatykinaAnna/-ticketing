@@ -29,17 +29,19 @@
                     <input type="checkbox" id="three" [(ngModel)]="filtr_numTransfer.three">
                     <label for="three">3 пересадки</label>
                 </div>
+                {{filtr_numTransfer.all}}
+                {{filtr_numTransfer.one}}
+                {{filtr_numTransfer.two}}
+                {{filtr_numTransfer.three}}
+                {{filtr_numTransfer.without}}
             </div>
             <div>
-                <button (click)="sortForPrice()">Самый дешевый</button>
-                <button (click)="sortForPrice()">Самый быстрый</button>
-                <button >Оптимальный</button>
+                <button class='btn b1' #b1 (click)="sortForPrice()">САМЫЙ ДЕШЕВЫЙ</button>
+                <button class='btn b2' #b2 (click)="sortForDuration()">САМЫЙ БЫСТРЫЙ</button>
+                <button class='btn b3 active' #b3 (click)="optimal()" >ОПТИМАЛЬНЫЙ</button>
             
                 <my-ticket [ticket]="tickets[0]"></my-ticket>
             </div>
         </div>
     </div>
 </div>
-
-
-
